@@ -3,13 +3,13 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use Livewire\WithFileUpload;
+use Livewire\WithFileUploads;
 use App\Models\Portofolio;
 
 
 class Porto extends Component
 {
-    use WithFileUpload;
+    use WithFileUploads;
 
     public $isModal = false;
 
@@ -38,9 +38,9 @@ class Porto extends Component
     public function store() {
 
         $this->validate([
-            'title' => 'require|string|max:25|min:5',
+            'title' => 'required|string|max:25|min:5',
             'description' => 'required|string|max:300',
-            'image' => 'require|image'
+            'image' => 'required|image'
         ]);
 
         Portofolio::updateOrCreate(['id' => $this->portofolio_id], [
@@ -48,6 +48,7 @@ class Porto extends Component
             'description' => $this->description,
             'portofolio_image' => $this->image->storePublicly('portofolio-image')
         ]);
+        session()->flash('message', $this->portofolio_id ? $this->title.'Berhasil di update' : 'Potofolio Berhasil ditambahkan');
         $this->closeModal();
         $this->resetFields();
     }
