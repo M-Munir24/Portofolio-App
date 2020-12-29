@@ -17,13 +17,15 @@
                 <form action="" class="mt-2">
                     <div class="mb-4">
                         <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Portofolio Title</label>
-                        <input wire:model="title" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight 
+                        <input  wire:model="title" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight 
                         focus:outline-none focus:shadow-outline" id="title" wire:model="title">
                         @error('title') <span class="text-red-500">{{ $message }}</span>@enderror
                     </div>
                     <div class="mb-4">
                         <label for="desc" class="block text-gray-700 text-sm font-bold mb-2">Description</label>
-                        <textarea wire:model="description" type="text" rows="5" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="desc"></textarea>
+                        <textarea wire:model="description" type="text" rows="5" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="desc">
+                          
+                        </textarea>
                         @error('description') <span class="text-red-500">{{ $message }}</span>@enderror
                     </div>
                     <div class="mb-4">

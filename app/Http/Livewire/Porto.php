@@ -11,9 +11,10 @@ class Porto extends Component
 {
     use WithFileUploads;
 
-    public $isModal = false;
+    public $portofolios, $portofolio, $title, $description, $image, $portofolio_id;
 
-    public $portofolios, $title, $description, $image, $portofolio_id;
+    public $isModal = false, $showModal = false;
+   
     public function render()
     {
         $this->portofolios = Portofolio::all();
@@ -25,10 +26,20 @@ class Porto extends Component
         $this->isModal = true;
     }
 
+    public function openShowModal(){
+        $this->showModal = true;
+    }
+
+
     //Close 
     public function closeModal(){
         $this->isModal = false;
     }
+
+    public function closeShowModal(){
+        $this->showModal = false;
+    }
+
 
     public function resetFields(){
         $this->title = '';
@@ -44,7 +55,7 @@ class Porto extends Component
             'image' => 'required|image'
         ]);
 
-        Portofolio::updateOrCreate(['id' => $this->portofolio_id], [
+        Portofolio::updateOrCreate(['id' => $this->portofolio->id], [
             'title' => $this->title,
             'description' => $this->description,
             'portofolio_image' => $this->image->storePublicly('portofolio-image', 'public')
@@ -52,6 +63,26 @@ class Porto extends Component
         session()->flash('message', $this->portofolio_id ? $this->title.'Berhasil di update' : 'Potofolio Berhasil ditambahkan');
         $this->closeModal();
         $this->resetFields();
+    }
+
+    public function show($id) {
+        $this->portofolio = Portofolio::find($id);
+        $this->openShowModal();
+    }
+
+    public function edit($id) {
+        $this->portofolio = Portofolio::find($id);
+        $this->title = $this->portofolio->title;
+        $this->description = $this->portofolio->description;
+
+        $this->openModal();
+
+    }
+
+    public function delete($id) {
+        Portofolio::destroy($id);
+        session()->flash('message', 'Berhasil Dihapus');
+        $this->closeShowModal();
     }
 
 }
