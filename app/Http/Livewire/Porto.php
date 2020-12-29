@@ -13,9 +13,10 @@ class Porto extends Component
 
     public $isModal = false;
 
-    public $title, $description, $image, $portofolio_id;
+    public $portofolios, $title, $description, $image, $portofolio_id;
     public function render()
     {
+        $this->portofolios = Portofolio::all();
         return view('livewire.porto');
     }
 
@@ -46,7 +47,7 @@ class Porto extends Component
         Portofolio::updateOrCreate(['id' => $this->portofolio_id], [
             'title' => $this->title,
             'description' => $this->description,
-            'portofolio_image' => $this->image->storePublicly('portofolio-image')
+            'portofolio_image' => $this->image->storePublicly('portofolio-image', 'public')
         ]);
         session()->flash('message', $this->portofolio_id ? $this->title.'Berhasil di update' : 'Potofolio Berhasil ditambahkan');
         $this->closeModal();
